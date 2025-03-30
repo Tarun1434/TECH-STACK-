@@ -1,11 +1,8 @@
 import './App.css'
+import Home from './component/Home'
 
 function App() {
-  return (
-    <div className='App'>
-     <h1>Frontend Website is Loading.........</h1>
-    </div>
-  )
+  return <Home />
 }
 
 export default App

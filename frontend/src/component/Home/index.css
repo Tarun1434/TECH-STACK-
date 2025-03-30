@@ -1,0 +1,97 @@
+.home_page_background {
+  background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
+  height: 100vh;
+  margin: 0;
+}
+@import url('https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap');
+h1 {
+  color: white;
+  font-size: 4.5em;
+  word-spacing: -12px;
+  font-family: 'Goldman', sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.stack_name {
+  color: #96ff00;
+}
+.st {
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
+.welcome_board {
+  color: white;
+  font-size: 3em;
+  font-family: 'Tilt Prism', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    'XROT' 0,
+    'YROT' 0;
+}
+.show_off {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.learning_button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: transparent;
+  color: white;
+  border: white 2px solid;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  margin-top: 6%;
+}
+
+.learning_button:hover {
+  transform: scale(1.1);
+}
+
+.letter_effect {
+  font-family: Play, sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  color: #96ff00;
+}
+
+.lists {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly center;
+  align-items: center;
+  color: white;
+  margin: 1%;
+  padding: 3%;
+  font-weight: 600;
+}
+
+.para_list {
+  padding: 20px;
+}
+
+.symbols {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 20px;
+}
+
+.white-logo {
+  filter: brightness(0) invert(1);
+}
