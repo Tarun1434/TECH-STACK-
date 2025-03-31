@@ -1,4 +1,5 @@
 import './index.css'
+import { FaCheckCircle } from "react-icons/fa";
 
 const Home = () => {
   return (
@@ -14,21 +15,40 @@ const Home = () => {
         <h2 className='welcome_board'>Boost Your Career With</h2>
         <span className='letter_effect'>AI and Machine Learning</span>
         <h2 className='welcome_board'>code-learn-suceeded</h2>
-        <button className='learning_button'>Begin Exploring</button>
-      </div>
+       </div>
+  
+       <div className='button-exploring'>
+       <button class="animated-button">
+  <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+    ></path>
+  </svg>
+  <span class="text">Begin Eploring</span>
+  <span class="circle"></span>
+  <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+    ></path>
+  </svg>
+</button>
+       </div>
 
       <div className='lists'>
         <p className='para_list'>
-          &#10132; "Step Up Your Coding Game Start Learning Today! Start
-          Learning Today!"
+          <span className="right_symbol"><FaCheckCircle color="96ff00" /></span>
+          "Step Up Your Coding Game Start Learning Today! Start
+          
         </p>
         <p className='para_list'>
-          &#10132; "Unlock Your Dream Job with the Right Preparation! with the
-          Right Preparation!"
-        </p>
+        <span className="right_symbol"><FaCheckCircle color="96ff00"  /></span>
+           "Unlock Your Dream Job with the Right Preparation! with the"
+         
+        </p> 
         <p className='para_list'>
-          &#10132; "Unlock Your Dream Job Start Your Interview Prep Today!
-          Unlock Your Dream Job Start "
+        <span className="right_symbol"><FaCheckCircle  color="96ff00" /></span>
+         "Unlock Your Dream Job Start Your Interview Prep Today!""
+         
         </p>
       </div>
 
