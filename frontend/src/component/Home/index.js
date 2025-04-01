@@ -1,242 +1,292 @@
-import { useState, useEffect } from 'react';
-import './index.css';
-import { FaCheckCircle } from 'react-icons/fa';
+"use client"
 
-const words = ['Web Development', 'Data Science', 'Machine Learning', 'Coding Mastery'];
+import { useState, useEffect } from "react"
+import { FaCheckCircle } from "react-icons/fa"
+import "./index.css"
+
+// Changed to tech question related words
+const words = ["Technical Interviews", "Coding Challenges", "Algorithm Mastery", "Problem Solving", "System Design"]
 
 const Home = () => {
-  const [wordIndex, setWordIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [typingText, setTypingText] = useState('');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [wordIndex, setWordIndex] = useState(0)
+  const [charIndex, setCharIndex] = useState(0)
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [typingText, setTypingText] = useState("")
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   useEffect(() => {
-    const currentWord = words[wordIndex];
-    let typingSpeed = isDeleting ? 50 : 100;
+    const currentWord = words[wordIndex]
+    let typingSpeed = isDeleting ? 50 : 100
 
     const timeout = setTimeout(() => {
-      setTypingText(currentWord.substring(0, charIndex + (isDeleting ? -1 : 1)));
-      setCharIndex(prev => prev + (isDeleting ? -1 : 1));
+      setTypingText(currentWord.substring(0, charIndex + (isDeleting ? -1 : 1)))
+      setCharIndex((prev) => prev + (isDeleting ? -1 : 1))
 
       if (!isDeleting && charIndex === currentWord.length) {
-        setIsDeleting(true);
-        typingSpeed = 1000;
+        setIsDeleting(true)
+        typingSpeed = 1000
       }
       if (isDeleting && charIndex === 0) {
-        setIsDeleting(false);
-        setWordIndex((prev) => (prev + 1) % words.length);
+        setIsDeleting(false)
+        setWordIndex((prev) => (prev + 1) % words.length)
       }
-    }, typingSpeed);
+    }, typingSpeed)
 
-    return () => clearTimeout(timeout);
-  }, [charIndex, isDeleting, wordIndex]);
+    return () => clearTimeout(timeout)
+  }, [charIndex, isDeleting, wordIndex])
 
   const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const sidebar = document.querySelector(".sidebar")
+      const hamburger = document.querySelector(".hamburger")
+
+      if (
+        isSidebarOpen &&
+        sidebar &&
+        !sidebar.contains(event.target) &&
+        hamburger &&
+        !hamburger.contains(event.target)
+      ) {
+        setIsSidebarOpen(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [isSidebarOpen])
 
   return (
-    <div className='home_page_background'>
-      <div className='nav'>
-        <h1>
-          Tech <span className='stack_name'>Stack</span>
+    <div className="home-page-background">
+      <div className="nav">
+        <h1 className="logo">
+          Tech <span className="stack-name">Stack</span>
         </h1>
-        <div className={`hamburger ${isSidebarOpen ? 'open' : ''}`} onClick={toggleSidebar}>
+        <div className={`hamburger ${isSidebarOpen ? "open" : ""}`} onClick={toggleSidebar}>
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
 
-      {/* Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
+      {/* Sidebar with improved styling */}
+      <div className={`sidebar ${isSidebarOpen ? "active" : ""}`}>
         <div className="sidebar-header">
           <h2>Menu</h2>
         </div>
         <div className="menu-items">
-          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Home</a>
-          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>About</a>
-          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Services</a>
-          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Contact</a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>
+            <span className="menu-icon">🏠</span>
+            <span className="menu-text">Home</span>
+          </a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>
+            <span className="menu-icon">📚</span>
+            <span className="menu-text">Learning Paths</span>
+          </a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>
+            <span className="menu-icon">🧩</span>
+            <span className="menu-text">Practice</span>
+          </a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>
+            <span className="menu-icon">🏆</span>
+            <span className="menu-text">Challenges</span>
+          </a>
+        </div>
+        <div className="sidebar-footer">
+          <p>© 2025 Tech Stack</p>
         </div>
       </div>
 
-      {/* Main Content - Unaffected by Sidebar */}
-      <div className='main-container'>
-        <div className='show_off'>
-          <h2 className='welcome_board'>Boost Your Career With</h2>
-          <span className='letter_effect'>{typingText}</span>
-          <h2 className='short_line'>Learn Smarter not Harder - try Techstack Shortcuts</h2>
+      {/* Main Content */}
+      <div className="main-container">
+        <div className="hero-section">
+          <h2 className="welcome-board">Ace Your Tech Career With</h2>
+          <div className="typing-container">
+            <span className="letter-effect">{typingText}</span>
+          </div>
+          <h2 className="short-line">Master the skills that matter - Practice makes perfect</h2>
         </div>
 
-        <div className='button-exploring'>
-          <button className='animated-button'>
-            <svg viewBox='0 0 24 24' className='arr-2'>
-              <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
+        <div className="features-list">
+          <div className="feature-item">
+            <span className="feature-icon">
+              <FaCheckCircle color="#96ff00" />
+            </span>
+            <p>"Practice real interview questions from top tech companies"</p>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">
+              <FaCheckCircle color="#96ff00" />
+            </span>
+            <p>"Master data structures and algorithms with guided practice"</p>
+          </div>
+          <div className="feature-item">
+            <span className="feature-icon">
+              <FaCheckCircle color="#96ff00" />
+            </span>
+            <p>"Join a community of developers preparing for tech interviews"</p>
+          </div>
+        </div>
+
+        <div className="button-exploring">
+          <button className="animated-button">
+            <svg viewBox="0 0 24 24" className="arr-2">
+              <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
             </svg>
-            <span className='text'>Begin Exploring</span>
-            <span className='circle'></span>
-            <svg viewBox='0 0 24 24' className='arr-1'>
-              <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
+            <span className="text">Start Practicing</span>
+            <span className="circle"></span>
+            <svg viewBox="0 0 24 24" className="arr-1">
+              <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
             </svg>
           </button>
         </div>
 
-        <div className='lists'>
-          <p className='para_list'>
-            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
-            "Step Up Your Coding Game Start Learning Today!"
-          </p>
-          <p className='para_list'>
-            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
-            "Unlock Your Dream Job with the Right Preparation!"
-          </p>
-          <p className='para_list'>
-            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
-            "Start Your Interview Prep Today!"
-          </p>
+        <div className="tech-icons-container">
+          <div className="tech-icons">
+            {/* React */}
+            <div className="icon-wrapper" title="React">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/external-react-a-javascript-library-for-building-user-interfaces-logo-bold-tal-revivo.png"
+                alt="React"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Flutter */}
+            <div className="icon-wrapper" title="Flutter">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/flutter.png"
+                alt="Flutter"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Google Cloud */}
+            <div className="icon-wrapper" title="Google Cloud">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/google-cloud.png"
+                alt="Google Cloud"
+                className="white-logo"
+              />
+            </div>
+
+            {/* JavaScript */}
+            <div className="icon-wrapper" title="JavaScript">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/javascript.png"
+                alt="JavaScript"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Java */}
+            <div className="icon-wrapper" title="Java">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/java-coffee-cup-logo.png"
+                alt="Java"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Database */}
+            <div className="icon-wrapper" title="Database">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/database.png"
+                alt="Database"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Bootstrap */}
+            <div className="icon-wrapper" title="Bootstrap">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/bootstrap.png"
+                alt="Bootstrap"
+                className="white-logo"
+              />
+            </div>
+
+            {/* HTML5 */}
+            <div className="icon-wrapper" title="HTML5">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/html-5.png"
+                alt="HTML5"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Python */}
+            <div className="icon-wrapper" title="Python">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/python.png"
+                alt="Python"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Node.js */}
+            <div className="icon-wrapper" title="Node.js">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/nodejs.png"
+                alt="Node.js"
+                className="white-logo"
+              />
+            </div>
+
+            {/* AWS */}
+            <div className="icon-wrapper" title="AWS">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/amazon-web-services.png"
+                alt="AWS"
+                className="white-logo"
+              />
+            </div>
+
+            {/* Docker */}
+            <div className="icon-wrapper" title="Docker">
+              <img
+                width="50"
+                height="50"
+                src="https://img.icons8.com/ios-filled/50/docker.png"
+                alt="Docker"
+                className="white-logo"
+              />
+            </div>
+          </div>
         </div>
-        <div className='symbols'>
-        <img
-          width='50'
-          height='50'
-          src='https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/external-react-a-javascript-library-for-building-user-interfaces-logo-bold-tal-revivo.png'
-          alt='external-react-a-javascript-library-for-building-user-interfaces-logo-bold-tal-revivo'
-          className='white-logo'
-        />
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 24 24'
-        >
-          <path
-            d='M23.395 7.081c-.488-.207-1.053-.002-1.29.472-.224.448-.523.723-.914.838-.612.183-1.343-.052-1.685-.253-.451-.265-.974-.667-1.527-1.092C16.214 5.688 14.018 4 11 4 8.586 4 7.346 5.239 5.293 7.293 4.902 7.684 4.899 8.32 5.29 8.71 5.67 9.092 6.28 9.104 6.672 8.74c.01-.009.02-.019.03-.028.552-.426 4.03-.012 5.55 1.196C14.511 11.703 16.142 13 18 13c2.659 0 4.879-1.741 5.94-4.658C24.121 7.844 23.882 7.291 23.395 7.081zM18.395 14.081c-.488-.207-1.053-.002-1.29.472-.224.448-.523.723-.914.838-.612.18-1.343-.052-1.685-.253-.451-.265-.974-.667-1.527-1.092C11.214 12.688 9.018 11 6 11c-2.414 0-3.654 1.239-5.707 3.293-.391.391-.394 1.027-.003 1.417.38.382.991.395 1.383.03.01-.009.02-.019.03-.028.551-.426 4.031-.012 5.55 1.196C9.511 18.703 11.142 20 13 20c2.659 0 4.879-1.741 5.94-4.658C19.121 14.844 18.882 14.291 18.395 14.081z'
-            fill='white'
-          ></path>
-        </svg>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 43.910156 12.003906 L 27.070313 2.539063 C 25.792969 1.824219 24.207031 1.824219 22.929688 2.539063 L 6.089844 12.003906 C 4.800781 12.726563 4 14.082031 4 15.535156 L 4 34.464844 C 4 35.917969 4.800781 37.273438 6.089844 37.996094 L 22.929688 47.460938 C 23.570313 47.820313 24.285156 48 25 48 C 25.714844 48 26.429688 47.820313 27.070313 47.460938 L 43.910156 37.996094 C 45.199219 37.273438 46 35.917969 46 34.464844 L 46 15.535156 C 46 14.082031 45.199219 12.726563 43.910156 12.003906 Z M 25 37 C 18.382813 37 13 31.617188 13 25 C 13 18.382813 18.382813 13 25 13 C 28.78125 13 32.273438 14.753906 34.542969 17.742188 L 30.160156 20.277344 C 28.84375 18.835938 26.972656 18 25 18 C 21.140625 18 18 21.140625 18 25 C 18 28.859375 21.140625 32 25 32 C 26.972656 32 28.84375 31.164063 30.160156 29.722656 L 34.542969 32.257813 C 32.273438 35.246094 28.78125 37 25 37 Z M 37 26 L 35 26 L 35 28 L 33 28 L 33 26 L 31 26 L 31 24 L 33 24 L 33 22 L 35 22 L 35 24 L 37 24 Z M 44 26 L 42 26 L 42 28 L 40 28 L 40 26 L 38 26 L 38 24 L 40 24 L 40 22 L 42 22 L 42 24 L 44 24 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 6.667969 4 C 5.207031 4 4 5.207031 4 6.667969 L 4 43.332031 C 4 44.792969 5.207031 46 6.667969 46 L 43.332031 46 C 44.792969 46 46 44.796875 46 43.332031 L 46 6.667969 C 46 5.207031 44.796875 4 43.332031 4 Z M 6.667969 6 L 43.332031 6 C 43.703125 6 44 6.296875 44 6.667969 L 44 43.332031 C 44 43.703125 43.703125 44 43.332031 44 L 6.667969 44 C 6.296875 44 6 43.703125 6 43.332031 L 6 6.667969 C 6 6.296875 6.296875 6 6.667969 6 Z M 23 23 L 23 35.574219 C 23 37.503906 22.269531 38 21 38 C 19.671875 38 18.75 37.171875 18.140625 36.097656 L 15 38 C 15.910156 39.925781 18.140625 42 21.234375 42 C 24.65625 42 27 40.179688 27 36.183594 L 27 23 Z M 35.453125 23 C 32.046875 23 29.863281 25.179688 29.863281 28.042969 C 29.863281 31.148438 31.695313 32.617188 34.449219 33.789063 L 35.402344 34.199219 C 37.140625 34.960938 38 35.425781 38 36.734375 C 38 37.824219 37.171875 38.613281 35.589844 38.613281 C 33.707031 38.613281 32.816406 37.335938 32 36 L 29 38 C 30.121094 40.214844 32.132813 42 35.675781 42 C 39.300781 42 42 40.117188 42 36.683594 C 42 33.496094 40.171875 32.078125 36.925781 30.6875 L 35.972656 30.28125 C 34.335938 29.570313 33.625 29.109375 33.625 27.964844 C 33.625 27.039063 34.335938 26.328125 35.453125 26.328125 C 36.550781 26.328125 37.253906 26.792969 37.90625 27.964844 L 40.878906 26.058594 C 39.625 23.84375 37.878906 23 35.453125 23 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 28.1875 0 C 30.9375 6.363281 18.328125 10.292969 17.15625 15.59375 C 16.082031 20.464844 24.648438 26.125 24.65625 26.125 C 23.355469 24.109375 22.398438 22.449219 21.09375 19.3125 C 18.886719 14.007813 34.535156 9.207031 28.1875 0 Z M 36.5625 8.8125 C 36.5625 8.8125 25.5 9.523438 24.9375 16.59375 C 24.6875 19.742188 27.847656 21.398438 27.9375 23.6875 C 28.011719 25.558594 26.0625 27.125 26.0625 27.125 C 26.0625 27.125 29.609375 26.449219 30.71875 23.59375 C 31.949219 20.425781 28.320313 18.285156 28.6875 15.75 C 29.039063 13.324219 36.5625 8.8125 36.5625 8.8125 Z M 19.1875 25.15625 C 19.1875 25.15625 9.0625 25.011719 9.0625 27.875 C 9.0625 30.867188 22.316406 31.089844 31.78125 29.25 C 31.78125 29.25 34.296875 27.519531 34.96875 26.875 C 28.765625 28.140625 14.625 28.28125 14.625 27.1875 C 14.625 26.179688 19.1875 25.15625 19.1875 25.15625 Z M 38.65625 25.15625 C 37.664063 25.234375 36.59375 25.617188 35.625 26.3125 C 37.90625 25.820313 39.84375 27.234375 39.84375 28.84375 C 39.84375 32.46875 34.59375 35.875 34.59375 35.875 C 34.59375 35.875 42.71875 34.953125 42.71875 29 C 42.71875 26.296875 40.839844 24.984375 38.65625 25.15625 Z M 16.75 30.71875 C 15.195313 30.71875 12.875 31.9375 12.875 33.09375 C 12.875 35.417969 24.5625 37.207031 33.21875 33.8125 L 30.21875 31.96875 C 24.351563 33.847656 13.546875 33.234375 16.75 30.71875 Z M 18.1875 35.9375 C 16.058594 35.9375 14.65625 37.222656 14.65625 38.1875 C 14.65625 41.171875 27.371094 41.472656 32.40625 38.4375 L 29.21875 36.40625 C 25.457031 37.996094 16.015625 38.238281 18.1875 35.9375 Z M 11.09375 38.625 C 7.625 38.554688 5.375 40.113281 5.375 41.40625 C 5.375 48.28125 40.875 47.964844 40.875 40.9375 C 40.875 39.769531 39.527344 39.203125 39.03125 38.9375 C 41.933594 45.65625 9.96875 45.121094 9.96875 41.15625 C 9.96875 40.253906 12.320313 39.390625 14.5 39.8125 L 12.65625 38.75 C 12.113281 38.667969 11.589844 38.636719 11.09375 38.625 Z M 44.625 43.25 C 39.226563 48.367188 25.546875 50.222656 11.78125 47.0625 C 25.542969 52.695313 44.558594 49.535156 44.625 43.25 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <img
-          width='50'
-          height='50'
-          src='https://img.icons8.com/ios-filled/50/database.png'
-          alt='database'
-          className='white-logo'
-        />
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 45.273438 2.324219 C 45.085938 2.117188 44.816406 2 44.535156 2 L 5.464844 2 C 5.183594 2 4.914063 2.117188 4.726563 2.324219 C 4.535156 2.53125 4.441406 2.808594 4.46875 3.089844 L 7.988281 42.515625 C 8.023438 42.929688 8.3125 43.273438 8.710938 43.390625 L 24.722656 47.960938 C 24.808594 47.988281 24.902344 48 24.996094 48 C 25.089844 48 25.179688 47.988281 25.269531 47.960938 L 41.292969 43.390625 C 41.691406 43.273438 41.976563 42.929688 42.015625 42.515625 L 45.53125 3.089844 C 45.558594 2.808594 45.464844 2.53125 45.273438 2.324219 Z M 36.847656 15.917969 L 18.035156 15.917969 L 18.484375 21.007813 L 36.394531 21.007813 L 35.050781 36.050781 L 24.992188 39.089844 L 24.894531 39.058594 L 14.953125 36.046875 L 14.410156 29.917969 L 19.28125 29.917969 L 19.492188 32.296875 L 25.050781 33.460938 L 30.507813 32.296875 L 31.089844 25.859375 L 14.046875 25.859375 L 12.722656 11.054688 L 37.28125 11.054688 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <img
-          width='50'
-          height='50'
-          src='https://img.icons8.com/sf-regular-filled/48/operating-system.png'
-          alt='operating-system'
-          className='white-logo'
-        />
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 6.667969 4 C 5.207031 4 4 5.207031 4 6.667969 L 4 43.332031 C 4 44.792969 5.207031 46 6.667969 46 L 43.332031 46 C 44.792969 46 46 44.796875 46 43.332031 L 46 6.667969 C 46 5.207031 44.796875 4 43.332031 4 Z M 6.667969 6 L 43.332031 6 C 43.703125 6 44 6.296875 44 6.667969 L 44 43.332031 C 44 43.703125 43.703125 44 43.332031 44 L 6.667969 44 C 6.296875 44 6 43.703125 6 43.332031 L 6 6.667969 C 6 6.296875 6.296875 6 6.667969 6 Z M 23 23 L 23 35.574219 C 23 37.503906 22.269531 38 21 38 C 19.671875 38 18.75 37.171875 18.140625 36.097656 L 15 38 C 15.910156 39.925781 18.140625 42 21.234375 42 C 24.65625 42 27 40.179688 27 36.183594 L 27 23 Z M 35.453125 23 C 32.046875 23 29.863281 25.179688 29.863281 28.042969 C 29.863281 31.148438 31.695313 32.617188 34.449219 33.789063 L 35.402344 34.199219 C 37.140625 34.960938 38 35.425781 38 36.734375 C 38 37.824219 37.171875 38.613281 35.589844 38.613281 C 33.707031 38.613281 32.816406 37.335938 32 36 L 29 38 C 30.121094 40.214844 32.132813 42 35.675781 42 C 39.300781 42 42 40.117188 42 36.683594 C 42 33.496094 40.171875 32.078125 36.925781 30.6875 L 35.972656 30.28125 C 34.335938 29.570313 33.625 29.109375 33.625 27.964844 C 33.625 27.039063 34.335938 26.328125 35.453125 26.328125 C 36.550781 26.328125 37.253906 26.792969 37.90625 27.964844 L 40.878906 26.058594 C 39.625 23.84375 37.878906 23 35.453125 23 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 50 50'
-        >
-          <path
-            d='M 28.1875 0 C 30.9375 6.363281 18.328125 10.292969 17.15625 15.59375 C 16.082031 20.464844 24.648438 26.125 24.65625 26.125 C 23.355469 24.109375 22.398438 22.449219 21.09375 19.3125 C 18.886719 14.007813 34.535156 9.207031 28.1875 0 Z M 36.5625 8.8125 C 36.5625 8.8125 25.5 9.523438 24.9375 16.59375 C 24.6875 19.742188 27.847656 21.398438 27.9375 23.6875 C 28.011719 25.558594 26.0625 27.125 26.0625 27.125 C 26.0625 27.125 29.609375 26.449219 30.71875 23.59375 C 31.949219 20.425781 28.320313 18.285156 28.6875 15.75 C 29.039063 13.324219 36.5625 8.8125 36.5625 8.8125 Z M 19.1875 25.15625 C 19.1875 25.15625 9.0625 25.011719 9.0625 27.875 C 9.0625 30.867188 22.316406 31.089844 31.78125 29.25 C 31.78125 29.25 34.296875 27.519531 34.96875 26.875 C 28.765625 28.140625 14.625 28.28125 14.625 27.1875 C 14.625 26.179688 19.1875 25.15625 19.1875 25.15625 Z M 38.65625 25.15625 C 37.664063 25.234375 36.59375 25.617188 35.625 26.3125 C 37.90625 25.820313 39.84375 27.234375 39.84375 28.84375 C 39.84375 32.46875 34.59375 35.875 34.59375 35.875 C 34.59375 35.875 42.71875 34.953125 42.71875 29 C 42.71875 26.296875 40.839844 24.984375 38.65625 25.15625 Z M 16.75 30.71875 C 15.195313 30.71875 12.875 31.9375 12.875 33.09375 C 12.875 35.417969 24.5625 37.207031 33.21875 33.8125 L 30.21875 31.96875 C 24.351563 33.847656 13.546875 33.234375 16.75 30.71875 Z M 18.1875 35.9375 C 16.058594 35.9375 14.65625 37.222656 14.65625 38.1875 C 14.65625 41.171875 27.371094 41.472656 32.40625 38.4375 L 29.21875 36.40625 C 25.457031 37.996094 16.015625 38.238281 18.1875 35.9375 Z M 11.09375 38.625 C 7.625 38.554688 5.375 40.113281 5.375 41.40625 C 5.375 48.28125 40.875 47.964844 40.875 40.9375 C 40.875 39.769531 39.527344 39.203125 39.03125 38.9375 C 41.933594 45.65625 9.96875 45.121094 9.96875 41.15625 C 9.96875 40.253906 12.320313 39.390625 14.5 39.8125 L 12.65625 38.75 C 12.113281 38.667969 11.589844 38.636719 11.09375 38.625 Z M 44.625 43.25 C 39.226563 48.367188 25.546875 50.222656 11.78125 47.0625 C 25.542969 52.695313 44.558594 49.535156 44.625 43.25 Z'
-            fill='white'
-          ></path>
-        </svg>
-        <img
-          width='50'
-          height='50'
-          src='https://img.icons8.com/ios-filled/50/database.png'
-          alt='database'
-          className='white-logo'
-        />
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          x='0px'
-          y='0px'
-          width='50'
-          height='50'
-          viewBox='0 0 30 30'
-        >
-          <path
-            d='M4.576,6.133C4.525,4.637,5.66,3.258,7.194,3.258h15.721c1.534,0,2.669,1.379,2.619,2.875	c-0.049,1.437,0.015,3.298,0.471,4.816c0.458,1.522,1.229,2.485,2.494,2.608v1.402c-1.264,0.124-2.036,1.086-2.494,2.608	c-0.456,1.518-0.52,3.379-0.471,4.816c0.051,1.496-1.084,2.875-2.619,2.875H7.194c-1.534,0-2.669-1.379-2.619-2.875	c0.049-1.437-0.015-3.298-0.471-4.816c-0.458-1.522-1.231-2.485-2.495-2.608v-1.402c1.264-0.124,2.038-1.086,2.495-2.608	C4.561,9.431,4.624,7.57,4.576,6.133z'
-            fill='white'
-          ></path>
-          <path d='M16.759,13.922v-0.017c1.168-0.202,2.079-1.296,2.079-2.502c0-0.852-0.328-1.574-0.948-2.087	c-0.618-0.512-1.486-0.782-2.509-0.782h-4.687v11.449h4.711c1.224,0,2.24-0.299,2.938-0.865c0.699-0.567,1.069-1.391,1.069-2.384	C19.413,15.233,18.347,14.106,16.759,13.922z M14.564,13.383H12.56v-3.351h2.385c1.308,0,2.029,0.574,2.029,1.616	C16.973,12.766,16.118,13.383,14.564,13.383z M12.56,14.786h2.369c1.711,0,2.579,0.618,2.579,1.838c0,1.218-0.855,1.861-2.474,1.861	H12.56V14.786z'></path>
-        </svg>
-      </div>
 
-
+       
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
