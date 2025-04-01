@@ -16,6 +16,7 @@ h1 {
   font-family: 'Goldman', sans-serif;
   font-weight: 500;
   font-style: normal;
+  position: sticky;
 }
 
 .stack_name {
@@ -32,6 +33,8 @@ h1 {
   display: flex;
   justify-content: space-between;
   padding: 20px;
+  position: fixed;
+  background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Prism&display=swap');
@@ -259,6 +262,9 @@ h1 {
     font-size: 30px;
     margin-top: 7%;
   }
+  .short_line{
+    margin-top: 20%;
+  }
 
   .learning_button {
     margin-top: 4%;
@@ -364,14 +370,15 @@ h1 {
 
 /* Hamburger Menu Styling */
 .hamburger {
-  position: relative;
+  position:relative;
   width: 30px;
   height: 20px;
   cursor: pointer;
   background: none;
   border: none;
   padding: 0;
-  z-index: 101;
+  z-index: 99;
+  
 }
 
 .hamburger span {
