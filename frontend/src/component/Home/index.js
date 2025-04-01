@@ -1,58 +1,103 @@
-import './index.css'
-import { FaCheckCircle } from "react-icons/fa";
+import { useState, useEffect } from 'react';
+import './index.css';
+import { FaCheckCircle } from 'react-icons/fa';
+
+const words = ['Web Development', 'Data Science', 'Machine Learning', 'Coding Mastery'];
 
 const Home = () => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [typingText, setTypingText] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex];
+    let typingSpeed = isDeleting ? 50 : 100;
+
+    const timeout = setTimeout(() => {
+      setTypingText(currentWord.substring(0, charIndex + (isDeleting ? -1 : 1)));
+      setCharIndex(prev => prev + (isDeleting ? -1 : 1));
+
+      if (!isDeleting && charIndex === currentWord.length) {
+        setIsDeleting(true);
+        typingSpeed = 1000;
+      }
+      if (isDeleting && charIndex === 0) {
+        setIsDeleting(false);
+        setWordIndex((prev) => (prev + 1) % words.length);
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, wordIndex]);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className='home_page_background'>
       <div className='nav'>
         <h1>
           Tech <span className='stack_name'>Stack</span>
         </h1>
-        <span className='st'>&#9776;</span>
+        <div className={`hamburger ${isSidebarOpen ? 'open' : ''}`} onClick={toggleSidebar}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
 
-      <div className='show_off'>
-        <h2 className='welcome_board'>Boost Your Career With</h2>
-        <span className='letter_effect'>AI and Machine Learning</span>
-        <h2 className='welcome_board'>code-learn-suceeded</h2>
-       </div>
-  
-       <div className='button-exploring'>
-       <button class="animated-button">
-  <svg viewBox="0 0 24 24" class="arr-2" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-    ></path>
-  </svg>
-  <span class="text">Begin Eploring</span>
-  <span class="circle"></span>
-  <svg viewBox="0 0 24 24" class="arr-1" xmlns="http://www.w3.org/2000/svg">
-    <path
-      d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
-    ></path>
-  </svg>
-</button>
-       </div>
-
-      <div className='lists'>
-        <p className='para_list'>
-          <span className="right_symbol"><FaCheckCircle color="96ff00" /></span>
-          "Step Up Your Coding Game Start Learning Today! Start
-          
-        </p>
-        <p className='para_list'>
-        <span className="right_symbol"><FaCheckCircle color="96ff00"  /></span>
-           "Unlock Your Dream Job with the Right Preparation! with the"
-         
-        </p> 
-        <p className='para_list'>
-        <span className="right_symbol"><FaCheckCircle  color="96ff00" /></span>
-         "Unlock Your Dream Job Start Your Interview Prep Today!""
-         
-        </p>
+      {/* Sidebar */}
+      <div className={`sidebar ${isSidebarOpen ? 'active' : ''}`}>
+        <div className="sidebar-header">
+          <h2>Menu</h2>
+        </div>
+        <div className="menu-items">
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Home</a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>About</a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Services</a>
+          <a href="https://flames.ccbp.tech/" onClick={toggleSidebar}>Contact</a>
+        </div>
       </div>
 
-      <div className='symbols'>
+      {/* Main Content - Unaffected by Sidebar */}
+      <div className='main-container'>
+        <div className='show_off'>
+          <h2 className='welcome_board'>Boost Your Career With</h2>
+          <span className='letter_effect'>{typingText}</span>
+          <h2 className='short_line'>Learn Smarter not Harder - try Techstack Shortcuts</h2>
+        </div>
+
+        <div className='button-exploring'>
+          <button className='animated-button'>
+            <svg viewBox='0 0 24 24' className='arr-2'>
+              <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
+            </svg>
+            <span className='text'>Begin Exploring</span>
+            <span className='circle'></span>
+            <svg viewBox='0 0 24 24' className='arr-1'>
+              <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className='lists'>
+          <p className='para_list'>
+            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
+            "Step Up Your Coding Game Start Learning Today!"
+          </p>
+          <p className='para_list'>
+            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
+            "Unlock Your Dream Job with the Right Preparation!"
+          </p>
+          <p className='para_list'>
+            <span className='right_symbol'><FaCheckCircle color='96ff00' /></span>
+            "Start Your Interview Prep Today!"
+          </p>
+        </div>
+        <div className='symbols'>
         <img
           width='50'
           height='50'
@@ -187,8 +232,11 @@ const Home = () => {
           <path d='M16.759,13.922v-0.017c1.168-0.202,2.079-1.296,2.079-2.502c0-0.852-0.328-1.574-0.948-2.087	c-0.618-0.512-1.486-0.782-2.509-0.782h-4.687v11.449h4.711c1.224,0,2.24-0.299,2.938-0.865c0.699-0.567,1.069-1.391,1.069-2.384	C19.413,15.233,18.347,14.106,16.759,13.922z M14.564,13.383H12.56v-3.351h2.385c1.308,0,2.029,0.574,2.029,1.616	C16.973,12.766,16.118,13.383,14.564,13.383z M12.56,14.786h2.369c1.711,0,2.579,0.618,2.579,1.838c0,1.218-0.855,1.861-2.474,1.861	H12.56V14.786z'></path>
         </svg>
       </div>
-    </div>
-  )
-}
 
-export default Home
+
+      </div>
+    </div>
+  );
+};
+
+export default Home;
