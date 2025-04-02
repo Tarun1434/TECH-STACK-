@@ -41,7 +41,16 @@
       grid-template-columns: repeat(2, 1fr); /* Two cards per row on small screens */
       gap: 10px;
     }
+  
+    .card {
+        justify-content: flex-start !important; /* Force alignment */
+      }
+    
+      .logo-wrapper {
+        justify-content: flex-start !important; /* Force logo alignment */
+      }
   }
+  
 
   /* Card Styles */
   .card {
@@ -84,7 +93,9 @@
     .cards-container {
       grid-template-columns: repeat(2, 1fr); /* Ensure two cards per row on very small screens */
       padding: 15px; /* Add padding for better spacing */
+
     }
+   
     .logo-name {
       font-size: 16px;
     }
