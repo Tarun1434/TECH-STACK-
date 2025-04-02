@@ -1,3 +1,4 @@
+
 /* Global Styles */
 * {
     box-sizing: border-box;
@@ -10,48 +11,55 @@
     background-color: #282c34;
     color: white;
   }
-  
+
   /* Cards Container */
   .cards-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four cards per row on large screens */
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(3, 1fr); /* Three cards per row */
-    gap: 100px;
+    gap: 40px; /* Reduced gap for better spacing */
+    max-width: 1200px; /* Set a max width */
+    margin: auto; /* Center align */
     padding: 20px;
   }
   
   @media (max-width: 1200px) {
     .cards-container {
-      grid-template-columns: repeat(2, 1fr); /* Two cards per row on medium screens */
+      grid-template-columns: repeat(3, 1fr); /* Three cards per row */
     }
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .cards-container {
-      grid-template-columns: repeat(1, 1fr); /* One card per row on small screens */
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr); /* Two cards per row */
     }
   }
   
+  @media (max-width: 600px) {
+    .cards-container {
+      grid-template-columns: repeat(2, 1fr); /* Two cards per row on small screens */
+      gap: 10px;
+    }
+  }
+
   /* Card Styles */
   .card {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
-    background-color: transparent; /* Transparent background */
+    background-color: transparent;
     padding: 10px;
-    border-radius: 15px; /* Border radius for rounded corners */
-    width: 180px;
-    height: 60px;
+    border-radius: 15px;
+    width: 180px; /* Increase width */
+    height: 70px; /* Increase height */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border: solid 2px white;
+    border: solid 2px #faf8f8;
     transition: transform 0.3s ease-in-out;
   }
   
   .card:hover {
-    transform: scale(1.05); /* Scale the card slightly on hover */
+    transform: scale(1.05);
   }
   
   .logo-wrapper {
@@ -73,13 +81,15 @@
   
   /* Mobile-Friendly Adjustments */
   @media (max-width: 480px) {
-    .logo-name {
-      font-size: 16px; /* Slightly smaller text on smaller screens */
+    .cards-container {
+      grid-template-columns: repeat(2, 1fr); /* Ensure two cards per row on very small screens */
+      padding: 15px; /* Add padding for better spacing */
     }
-  
+    .logo-name {
+      font-size: 16px;
+    }
     .white-logo {
       width: 25px;
       height: 25px;
     }
   }
-  
