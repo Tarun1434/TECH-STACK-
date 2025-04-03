@@ -1,0 +1,34 @@
+/* QuestionCard.css */
+.question-container {
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #7fadda;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.question-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.question-card {
+    padding: 15px;
+    background-color: #ffffff8f;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.question-card p {
+    margin: 5px 0;
+    color: black;
+}
+
+.question-card strong {
+    color: #070404;
+}
