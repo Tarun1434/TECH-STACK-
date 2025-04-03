@@ -1,10 +1,8 @@
 /* QuestionCard.css */
 .question-container {
-    margin-top: 20px;
+   
     padding: 20px;
-    
-    margin-left: auto;
-    margin-right: auto;
+   
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,31 +10,87 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
- 
-  animation: gradientBackground 15s ease infinite;
+    animation: gradientBackground 15s ease infinite;
+    width: 100%; /* Responsive width */
+    /* Max limit for larger screens */
 }
 
 .question-container h2 {
     text-align: center;
     color: hsl(136, 88%, 49%);
     margin-bottom: 20px;
+    font-size: 2rem; /* Base font size */
 }
 
 .question-card {
     padding: 15px;
-    max-width: 400px;
-    min-width: 400px;
+    width: 100%; /* Full width within container */
+    max-width: 400px; /* Max limit */
     border-radius: 8px;
     border: solid 2px white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
+    background-color: rgba(255, 255, 255, 0.1); /* Slight transparency */
 }
 
 .question-card p {
     margin: 5px 0;
     color: rgb(252, 248, 248);
+    font-size: 1rem; /* Base font size */
 }
 
 .question-card strong {
     color: #faf7f7;
+}
+
+/* Animation keyframes */
+@keyframes gradientBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Responsive Design with Media Queries */
+
+/* Tablets (up to 768px) */
+@media (max-width: 768px) {
+    .question-container {
+        padding: 15px;
+        width: 95%; /* Slightly wider on tablets */
+    }
+
+    .question-container h2 {
+        font-size: 1.5rem; /* Smaller heading */
+    }
+
+    .question-card {
+        max-width: 100%; /* Full width on smaller screens */
+        padding: 10px;
+    }
+
+    .question-card p {
+        font-size: 0.9rem; /* Slightly smaller text */
+    }
+}
+
+/* Mobile (up to 480px) */
+@media (max-width: 480px) {
+    .question-container {
+        padding: 10px;
+        width: 100%; /* Full width on mobile */
+    }
+
+    .question-container h2 {
+        font-size: 1.2rem; /* Even smaller heading */
+    }
+
+    .question-card {
+        max-width: 100%;
+        padding: 8px;
+        margin-bottom: 10px; /* Reduced spacing */
+    }
+
+    .question-card p {
+        font-size: 0.85rem; /* Smaller text for mobile */
+    }
 }
