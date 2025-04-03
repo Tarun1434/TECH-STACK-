@@ -2,33 +2,41 @@
 .question-container {
     margin-top: 20px;
     padding: 20px;
-    max-width: 800px;
+    
     margin-left: auto;
     margin-right: auto;
-    background-color: #7fadda;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
+ 
+  animation: gradientBackground 15s ease infinite;
 }
 
 .question-container h2 {
     text-align: center;
-    color: #333;
+    color: hsl(136, 88%, 49%);
     margin-bottom: 20px;
 }
 
 .question-card {
     padding: 15px;
-    background-color: #ffffff8f;
+    max-width: 400px;
+    min-width: 400px;
     border-radius: 8px;
+    border: solid 2px white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
 }
 
 .question-card p {
     margin: 5px 0;
-    color: black;
+    color: rgb(252, 248, 248);
 }
 
 .question-card strong {
-    color: #070404;
+    color: #faf7f7;
 }
