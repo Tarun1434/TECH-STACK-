@@ -1,14 +1,11 @@
-const { db } = require('../config/db');
+const db = require('../config/db');
 
-const getQuestions = async (req, res) => {
+exports.getQuestionsByLanguage = async (req, res) => {
+    const { language } = req.params;
     try {
-        const { language } = req.params;
-        const [rows] = await db.query('SELECT * FROM questions WHERE language = ?', [language]);
-        res.json(rows);
+        const [questions] = await db.query('SELECT * FROM questions WHERE language = ?', [language]);
+        res.json(questions);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ error: error.message });
     }
 };
-
-module.exports = { getQuestions };
