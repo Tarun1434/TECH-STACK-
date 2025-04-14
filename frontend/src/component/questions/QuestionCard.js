@@ -8,14 +8,13 @@ const QuestionCard = () => {
     const [questions, setQuestions] = useState([]);
     const [error, setError] = useState(null);
 
-    // Fetch questions
     useEffect(() => {
         const loadQuestions = async () => {
             try {
                 console.log(`Fetching questions for ${language}`);
                 const data = await fetchQuestions(language);
                 console.log("Data received:", data);
-                setQuestions(data);
+                setQuestions(data || []); // Ensure array
                 setError(null);
             } catch (error) {
                 console.error("Error fetching questions:", error);
@@ -31,10 +30,10 @@ const QuestionCard = () => {
                 <h2>{language} Questions</h2>
                 {error ? (
                     <p>Error: {error}</p>
-                ) : questions.length > 0 ? (
+                ) : Array.isArray(questions) && questions.length > 0 ? (
                     questions.map((q, index) => (
-                        <div key={index} className="question-card">
-                            <p><strong>Q{index + 1}:</strong> {q.question}</p>
+                        <div key={q.id || index} className="question-card">
+                            <p><strong>Q{index + 1}:</strong> {q.question || 'No question'}</p>
                             {q.answer && <p><strong>A:</strong> {q.answer}</p>}
                             {q.matter && <p><strong>Explanation:</strong> {q.matter}</p>}
                             {q.code && (
