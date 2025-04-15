@@ -1,8 +1,6 @@
-"use client"
-
 import { useState, useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
-import Cards from '../Cards'; // Adjust path if Cards.js is in a different directory
+import Cards from "../Cards";
 import "./index.css";
 
 const words = [
@@ -14,10 +12,10 @@ const words = [
 ];
 
 const menuItems = [
-  { text: "Home", icon: "🏠", link: "https://flames.ccbp.tech/" },
-  { text: "Learning Paths", icon: "📚", link: "https://flames.ccbp.tech/" },
-  { text: "Practice", icon: "🧩", link: "https://flames.ccbp.tech/" },
-  { text: "Challenges", icon: "🏆", link: "https://flames.ccbp.tech/" },
+  { text: "Home", icon: "🏠", link: "/" },
+  { text: "Learning Paths", icon: "📚", link: "/languages" },
+  { text: "Practice", icon: "🧩", link: "/languages" },
+  { text: "Challenges", icon: "🏆", link: "/languages" },
 ];
 
 const features = [
@@ -76,13 +74,15 @@ const Home = () => {
 
   return (
     <div className="home-page-background">
-      {/* Navbar and Logo - These will remain unchanged */}
+      {/* Navbar with logo on left and hamburger on right */}
       <div className="nav">
         <h1 className="logo">Tech <span className="stack-name">Stack</span></h1>
-        <div className={`hamburger ${isSidebarOpen ? "open" : ""}`} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
+        <div className="nav-hamburger">
+          <div className={`hamburger ${isSidebarOpen ? "open" : ""}`} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
       </div>
 
@@ -100,7 +100,7 @@ const Home = () => {
         <div className="sidebar-footer"><p>© 2025 Tech Stack</p></div>
       </div>
 
-      {/* Main content area - switches between home content and cards */}
+      {/* Main content area */}
       <div className="main-container">
         {showCards ? (
           <Cards />
@@ -121,18 +121,18 @@ const Home = () => {
               ))}
             </div>
 
-            <div className='button-exploring'>
-        <button className='animated-button' onClick={handleStartPracticing}>
-          <svg viewBox='0 0 24 24' className='arr-2'>
-            <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
-          </svg>
-          <span className='text'>Start Practicing</span>
-          <span className='circle'></span>
-          <svg viewBox='0 0 24 24' className='arr-1'>
-            <path d='M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z'></path>
-          </svg>
-        </button>
-      </div>
+            <div className="button-exploring">
+              <button className="animated-button" onClick={handleStartPracticing}>
+                <svg viewBox="0 0 24 24" className="arr-2">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
+                </svg>
+                <span className="text">Start Practicing</span>
+                <span className="circle"></span>
+                <svg viewBox="0 0 24 24" className="arr-1">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
+                </svg>
+              </button>
+            </div>
 
             <div className="tech-icons-container">
               <div className="tech-icons">

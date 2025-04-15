@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchQuestions } from "./api";
+import { fetchQuestions, saveQuestion } from "./api";
 import "./index.css";
 
-const QuestionCard = () => {
+const QuestionCard = ({ userId = "demoUser123" }) => {
     const { language } = useParams();
     const [questions, setQuestions] = useState([]);
     const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ const QuestionCard = () => {
                 console.log(`Fetching questions for ${language}`);
                 const data = await fetchQuestions(language);
                 console.log("Data received:", data);
-                setQuestions(data || []); // Ensure array
+                setQuestions(data || []);
                 setError(null);
             } catch (error) {
                 console.error("Error fetching questions:", error);
@@ -23,6 +23,20 @@ const QuestionCard = () => {
         };
         loadQuestions();
     }, [language]);
+
+    const handleSave = async (questionId) => {
+        try {
+            const data = await saveQuestion(userId, questionId);
+            if (data.success) {
+                alert("✅ Question saved successfully!");
+            } else {
+                alert("⚠️ Failed to save question.");
+            }
+        } catch (error) {
+            console.error("Error saving question:", error);
+            alert("🚫 Error saving question.");
+        }
+    };
 
     return (
         <div className="question-container-wrapper">
@@ -44,6 +58,12 @@ const QuestionCard = () => {
                                     </pre>
                                 </div>
                             )}
+                            <button
+                                className="save-btn"
+                                onClick={() => handleSave(q.id)}
+                            >
+                                💾 Save this Question
+                            </button>
                         </div>
                     ))
                 ) : (

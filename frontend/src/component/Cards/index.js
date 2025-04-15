@@ -3,20 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 
 const languages = [
-  { name: "HTML5", logo: "https://img.icons8.com/ios-filled/50/html-5.png" }, // HTML first
-  { name: "CSS", logo: "https://img.icons8.com/ios-filled/50/css3.png" }, // CSS (new logo)
-  { name: "JavaScript", logo: "https://img.icons8.com/ios-filled/50/javascript.png" }, // JS
-  { name: "React", logo: "https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/external-react-a-javascript-library-for-building-user-interfaces-logo-bold-tal-revivo.png" }, // React
-  { name: "Python", logo: "https://img.icons8.com/ios-filled/50/python.png" }, // Python
-  { name: "Database", logo: "https://img.icons8.com/ios-filled/50/database.png" }, // Database (removed duplicate)
-  { name: "Java", logo: "https://img.icons8.com/ios-filled/50/java-coffee-cup-logo.png" }, // Java
-  { name: "C++", logo: "https://img.icons8.com/ios-filled/50/c-plus-plus-logo.png" }, // C++ (new)
-  { name: "Flutter", logo: "https://img.icons8.com/ios-filled/50/flutter.png" }, // Flutter
-  { name: "Google Cloud", logo: "https://img.icons8.com/ios-filled/50/google-cloud.png" }, // Google Cloud
-  { name: "Node.js", logo: "https://img.icons8.com/ios-filled/50/nodejs.png" }, // Node.js
-  { name: "AWS", logo: "https://img.icons8.com/ios-filled/50/amazon-web-services.png" }, // AWS
-  { name: "Docker", logo: "https://img.icons8.com/ios-filled/50/docker.png" }, // Docker
-  { name: "Bootstrap", logo: "https://img.icons8.com/ios-filled/50/bootstrap.png" }, // Bootstrap
+  { name: "HTML5", logo: "https://img.icons8.com/ios-filled/50/html-5.png" },
+  { name: "CSS", logo: "https://img.icons8.com/ios-filled/50/css3.png" },
+  { name: "JavaScript", logo: "https://img.icons8.com/ios-filled/50/javascript.png" },
+  { name: "React", logo: "https://img.icons8.com/external-tal-revivo-bold-tal-revivo/24/external-react-a-javascript-library-for-building-user-interfaces-logo-bold-tal-revivo.png" },
+  { name: "Python", logo: "https://img.icons8.com/ios-filled/50/python.png" },
+  { name: "Database", logo: "https://img.icons8.com/ios-filled/50/database.png" },
+  { name: "Java", logo: "https://img.icons8.com/ios-filled/50/java-coffee-cup-logo.png" },
+  { name: "C++", logo: "https://img.icons8.com/ios-filled/50/c-plus-plus-logo.png" },
+  { name: "Flutter", logo: "https://img.icons8.com/ios-filled/50/flutter.png" },
+  { name: "Google Cloud", logo: "https://img.icons8.com/ios-filled/50/google-cloud.png" },
+  { name: "Node.js", logo: "https://img.icons8.com/ios-filled/50/nodejs.png" },
+  { name: "AWS", logo: "https://img.icons8.com/ios-filled/50/amazon-web-services.png" },
+  { name: "Docker", logo: "https://img.icons8.com/ios-filled/50/docker.png" },
+  { name: "Bootstrap", logo: "https://img.icons8.com/ios-filled/50/bootstrap.png" },
 ];
 
 const Card = ({ logo, name, onClick }) => {
@@ -34,7 +34,7 @@ const Cards = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (language) => {
-    navigate(`/questions/${language}`); // Navigate to question page
+    navigate(`/questions/${language}`);
   };
 
   return (
