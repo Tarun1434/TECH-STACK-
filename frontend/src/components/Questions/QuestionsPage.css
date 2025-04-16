@@ -1,0 +1,124 @@
+/* /frontend/src/components/Questions/QuestionsPage.css */
+.questions-page {
+    background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    min-height: 100vh;
+    padding: 2rem;
+    color: white;
+}
+
+.search-bar {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #00172d;
+}
+
+.questions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.question-card {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.saved-symbol {
+    cursor: pointer;
+    color: #faf7f7;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.saved-symbol.saved {
+    color: #96ff00;
+}
+
+.question-card p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: white;
+}
+
+.question-card strong {
+    color: #faf7f7;
+}
+
+.code-display {
+    margin-top: 0.5rem;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .questions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .questions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .questions-page {
+        padding: 1rem;
+    }
+
+    .search-bar {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .question-card {
+        padding: 0.75rem;
+    }
+
+    .question-card p {
+        font-size: 0.9rem;
+    }
+
+    .saved-symbol {
+        font-size: 1rem;
+    }
+}

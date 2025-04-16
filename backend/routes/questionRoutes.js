@@ -1,15 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { 
-    getQuestionsByLanguage, 
-    saveQuestion, 
-    getSavedQuestions, 
-    registerUser 
+const {
+    getQuestionsByLanguage,
+    searchQuestions,
+    saveQuestion,
+    getSavedQuestions,
 } = require('../controllers/questionController');
+const { authenticateToken } = require('../middleware/auth');
 
-router.get('/:language', getQuestionsByLanguage);
-router.post('/save-question', saveQuestion);
-router.get('/saved/:userId', getSavedQuestions);
-router.post('/register', registerUser);
+router.get('/language/:language', getQuestionsByLanguage);
+router.get('/search', searchQuestions);
+router.post('/save', authenticateToken, saveQuestion);
+router.get('/saved/:userId', authenticateToken, getSavedQuestions);
 
 module.exports = router;

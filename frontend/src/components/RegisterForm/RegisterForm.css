@@ -1,0 +1,194 @@
+/* /frontend/src/components/RegisterForm/RegisterForm.css */
+
+/* Root container for the entire page */
+.registration_container {
+  background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
+  background-size: 400% 400%;
+  animation: gradientBackground 15s ease infinite;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+/* Logo styles */
+.logo {
+  color: white;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  word-spacing: -0.25em;
+  font-family: "Goldman", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 10px rgba(150, 255, 0, 0.3);
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  margin: 0;
+  z-index: 10;
+}
+
+.stack-name {
+  color: #96ff00;
+}
+
+/* Registration form styles */
+.registration_form {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: clamp(1.5rem, 5vw, 2.5rem);
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.registration_form h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.registration_form input {
+  width: 100%;
+  padding: clamp(0.6rem, 1.5vw, 0.85rem);
+  margin: 0.5rem 0;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+  color: #00172d;
+}
+
+.registration_form button {
+  width: 100%;
+  padding: clamp(0.6rem, 1.5vw, 0.85rem);
+  margin-top: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  background-color: #02386e;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.registration_form button:hover {
+  background-color: #004aad;
+}
+
+/* Error message */
+.registration_form p[style*="color: red"] {
+  color: red;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+/* Link styles */
+.link {
+  font-size: 13px;
+  color: white;
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Animation for background */
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Media query for tablets and medium screens (≤768px) */
+@media (max-width: 768px) {
+  .logo {
+    font-size: clamp(2.5rem, 4vw, 1.75rem);
+    top: 0.75rem;
+    left: 0.75rem;
+  }
+
+  .registration_form {
+    max-width: 90%;
+    padding: clamp(2rem, 4vw, 1.5rem);
+  }
+
+  .registration_form h2 {
+    font-size: clamp(1.125rem, 4.5vw, 1.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .registration_form input,
+  .registration_form button {
+    padding: clamp(0.4rem, 1.8vw, 0.6rem);
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+  }
+}
+
+/* Media query for mobile devices (≤480px) */
+@media (max-width: 480px) {
+  .logo {
+    font-size: clamp(2rem, 3.5vw, 1.5rem);
+    top: 0.5rem;
+    left: 0.5rem;
+    word-spacing: -0.15em;
+  }
+
+  .registration_form {
+    max-width: 95%;
+    padding: clamp(0.5rem, 3vw, 1rem);
+  }
+
+  .registration_form h2 {
+    font-size: clamp(1rem, 4vw, 1.25rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .registration_form input,
+  .registration_form button {
+    padding: clamp(0.35rem, 1.5vw, 0.5rem);
+    font-size: clamp(0.7rem, 2.8vw, 0.8rem);
+  }
+
+  .registration_form button {
+    margin-top: 0.75rem;
+  }
+}
+
+/* Extra small screens (≤360px) */
+@media (max-width: 360px) {
+  .logo {
+    font-size: clamp(1.8rem, 3vw, 1.25rem);
+    top: 0.25rem;
+    left: 0.25rem;
+  }
+
+  .registration_form {
+    padding: clamp(0.4rem, 2.5vw, 0.75rem);
+  }
+
+  .registration_form h2 {
+    font-size: clamp(0.875rem, 3.5vw, 1rem);
+  }
+
+  .registration_form input,
+  .registration_form button {
+    padding: clamp(0.3rem, 1.2vw, 0.4rem);
+    font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+  }
+}

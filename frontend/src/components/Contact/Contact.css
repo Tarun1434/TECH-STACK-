@@ -1,0 +1,48 @@
+.contact-page {
+    background: linear-gradient(250deg, #00172d, #00264d, #02386e, #00172d);
+    background-size: 400% 400%;
+    animation: gradientBackground 15s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 2rem;
+}
+
+.contact-page h2 {
+    font-family: 'Goldman', sans-serif;
+    color: #96ff00;
+    margin-bottom: 1rem;
+}
+
+.contact-page p {
+    font-size: 1.2rem;
+}
+
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page {
+        padding: 1rem;
+    }
+
+    .contact-page h2 {
+        font-size: 1.5rem;
+    }
+
+    .contact-page p {
+        font-size: 1rem;
+    }
+}
