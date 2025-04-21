@@ -86,10 +86,8 @@ const Home = () => {
 
     const menuItems = [
         { text: 'Home', icon: '🏠', link: '/home' },
-        { text: 'Questions', icon: '❓', link: '/questions/JavaScript' },
+        { text: 'Saved Questions', icon: '⭐', link: '/saved' },
         { text: user ? `${user.username}'s Account` : 'Account', icon: '👤', link: '/account' },
-        { text: 'About', icon: 'ℹ️', link: '/about' },
-        { text: 'Contact', icon: '📧', link: '/contact' },
         { text: 'Logout', icon: '🚪', link: '#', onClick: handleLogout },
     ];
 
