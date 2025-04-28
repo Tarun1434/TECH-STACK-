@@ -1,7 +1,7 @@
 const { db } = require('../config/db');
 
 // Get questions by language
-exports.getQuestionsByLanguage = async (req, res) => {
+const getQuestionsByLanguage = async (req, res) => {
     const { language } = req.params;
     try {
         const [questions] = await db.query('SELECT * FROM questions WHERE language = ?', [language]);
@@ -13,7 +13,7 @@ exports.getQuestionsByLanguage = async (req, res) => {
 };
 
 // Search questions
-exports.searchQuestions = async (req, res) => {
+const searchQuestions = async (req, res) => {
     const { query } = req.query;
     try {
         const [questions] = await db.query(
@@ -28,19 +28,22 @@ exports.searchQuestions = async (req, res) => {
 };
 
 // Save a question to favorites
-exports.saveQuestion = async (req, res) => {
+const saveQuestion = async (req, res) => {
     const { userId, questionId } = req.body;
     try {
-        const [existing] = await db.query('SELECT * FROM saved_questions WHERE userId = ? AND questionId = ?', [
-            userId,
-            questionId,
-        ]);
+        const [existing] = await db.query(
+            'SELECT * FROM saved_questions WHERE userId = ? AND questionId = ?',
+            [userId, Number(questionId)]
+        );
 
         if (existing.length > 0) {
             return res.json({ success: true, message: 'Question already saved' });
         }
 
-        await db.query('INSERT INTO saved_questions (userId, questionId) VALUES (?, ?)', [userId, questionId]);
+        await db.query(
+            'INSERT INTO saved_questions (userId, questionId) VALUES (?, ?)',
+            [userId, Number(questionId)]
+        );
 
         res.json({ success: true, message: 'Question saved successfully' });
     } catch (error) {
@@ -50,7 +53,7 @@ exports.saveQuestion = async (req, res) => {
 };
 
 // Get saved questions for a user
-exports.getSavedQuestions = async (req, res) => {
+const getSavedQuestions = async (req, res) => {
     const { userId } = req.params;
     try {
         const [savedQuestions] = await db.query(
@@ -65,4 +68,44 @@ exports.getSavedQuestions = async (req, res) => {
         console.error('Error fetching saved questions:', error);
         res.status(500).json({ success: false, message: error.message });
     }
+};
+
+// Unsave a question
+const unsaveQuestion = async (req, res) => {
+    const { userId, questionId } = req.body;
+    try {
+        if (!userId || !questionId) {
+            return res.status(400).json({ success: false, message: 'userId and questionId are required' });
+        }
+        if (req.user.userId !== userId) {
+            return res.status(403).json({ success: false, message: 'Unauthorized' });
+        }
+
+        const numericQuestionId = Number(questionId);
+        if (isNaN(numericQuestionId)) {
+            return res.status(400).json({ success: false, message: 'Invalid questionId' });
+        }
+
+        const [result] = await db.query(
+            'DELETE FROM saved_questions WHERE userId = ? AND questionId = ?',
+            [userId, numericQuestionId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Saved question not found' });
+        }
+
+        res.json({ success: true, message: 'Question unsaved successfully' });
+    } catch (error) {
+        console.error('Error unsaving question:', error);
+        res.status(500).json({ success: false, message: 'Failed to unsave question' });
+    }
+};
+
+module.exports = {
+    getQuestionsByLanguage,
+    searchQuestions,
+    saveQuestion,
+    getSavedQuestions,
+    unsaveQuestion
 };

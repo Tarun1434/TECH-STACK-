@@ -7,17 +7,19 @@ import { FaBookmark } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchSavedQuestions, unsaveQuestion } from './api';
-
+import './index.css'
 
 const SavedQuestions = () => {
     const [savedQuestions, setSavedQuestions] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const { user, token } = useContext(AuthContext);
+    const { user, token, loading } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         const loadSavedQuestions = async () => {
+            if (loading) return; // Wait for AuthContext to initialize
+
             if (!user || !token) {
                 setError('Please log in to view saved questions.');
                 navigate('/login');
@@ -41,7 +43,7 @@ const SavedQuestions = () => {
         };
 
         loadSavedQuestions();
-    }, [user, token, navigate]);
+    }, [user, token, loading, navigate]);
 
     const handleUnsave = async (questionId) => {
         if (!user || !token) {
@@ -51,8 +53,7 @@ const SavedQuestions = () => {
         }
 
         try {
-            const payload = { userId: user.userId, questionId: Number(questionId) };
-            console.log('Unsaving question with payload:', payload);
+            console.log('Unsaving question:', { userId: user.userId, questionId });
             const response = await unsaveQuestion(user.userId, questionId, token);
             console.log('Unsave response:', response);
             if (response.success) {
@@ -63,10 +64,7 @@ const SavedQuestions = () => {
             }
         } catch (error) {
             console.error('Error unsaving question:', error);
-            const errorMessage = error.message.includes('404')
-                ? 'Unsave endpoint not found (404). Please verify the backend /api/questions/unsave route.'
-                : error.message || 'Failed to unsave question.';
-            toast.error(`Error unsaving question: ${errorMessage}`);
+            toast.error(`Error unsaving question: ${error.message}`);
             if (error.message.includes('Session expired')) {
                 navigate('/login');
             }
@@ -77,7 +75,7 @@ const SavedQuestions = () => {
         <div className="question-container-wrapper">
             <div className="question-container">
                 <h2>Your Saved Questions</h2>
-                {isLoading ? (
+                {isLoading || loading ? (
                     <p className="loading">Loading...</p>
                 ) : error ? (
                     <p className="error">{error}</p>

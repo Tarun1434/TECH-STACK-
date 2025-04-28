@@ -4,6 +4,9 @@ import { AuthContext } from '../AuthContext';
 import { FaRegBookmark, FaBookmark } from 'react-icons/fa';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { fetchQuestions, saveQuestion, fetchSavedQuestions, searchQuestions } from './api';
 import './QuestionsPage.css';
 
 const QuestionsPage = () => {
@@ -17,12 +20,9 @@ const QuestionsPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchQuestions = async () => {
+        const loadQuestions = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/questions/language/${language}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                const data = await res.json();
+                const data = await fetchQuestions(language, token);
                 setQuestions(data);
                 setFilteredQuestions(data);
             } catch (err) {
@@ -30,13 +30,10 @@ const QuestionsPage = () => {
             }
         };
 
-        const fetchSaved = async () => {
+        const loadSaved = async () => {
             if (user) {
                 try {
-                    const res = await fetch(`http://localhost:5000/api/questions/saved/${user.userId}`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                    const data = await res.json();
+                    const data = await fetchSavedQuestions(user.userId, token);
                     setSavedQuestions(new Set(data.map((q) => q.id)));
                 } catch (err) {
                     console.error('Error fetching saved questions:', err);
@@ -45,8 +42,8 @@ const QuestionsPage = () => {
         };
 
         if (token) {
-            fetchQuestions();
-            fetchSaved();
+            loadQuestions();
+            loadSaved();
         } else {
             navigate('/login');
         }
@@ -56,13 +53,7 @@ const QuestionsPage = () => {
         if (searchQuery) {
             const fetchSearch = async () => {
                 try {
-                    const res = await fetch(
-                        `http://localhost:5000/api/questions/search?query=${encodeURIComponent(searchQuery)}`,
-                        {
-                            headers: { Authorization: `Bearer ${token}` },
-                        }
-                    );
-                    const data = await res.json();
+                    const data = await searchQuestions(searchQuery, token);
                     setFilteredQuestions(data);
                 } catch (err) {
                     setError('Failed to search questions.');
@@ -81,23 +72,16 @@ const QuestionsPage = () => {
         }
 
         try {
-            const res = await fetch('http://localhost:5000/api/questions/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify({ userId: user.userId, questionId }),
-            });
-            const data = await res.json();
-            if (data.success) {
+            const response = await saveQuestion(user.userId, questionId, token);
+            if (response.success) {
                 setSavedQuestions((prev) => new Set(prev).add(questionId));
-                alert('Question saved successfully!');
+                toast.success('Question saved successfully!');
             } else {
-                alert('Failed to save question.');
+                toast.error(`Failed to save question: ${response.message || 'Unknown error'}`);
             }
         } catch (error) {
-            alert('Error saving question.');
+            console.error('Error saving question:', error);
+            toast.error(`Error saving question: ${error.message}`);
         }
     };
 
@@ -123,6 +107,7 @@ const QuestionsPage = () => {
                                 <span
                                     className={`saved-symbol ${savedQuestions.has(q.id) ? 'saved' : ''}`}
                                     onClick={() => handleSave(q.id)}
+                                    title={savedQuestions.has(q.id) ? 'Saved' : 'Save question'}
                                 >
                                     {savedQuestions.has(q.id) ? <FaBookmark /> : <FaRegBookmark />}
                                 </span>
@@ -155,6 +140,18 @@ const QuestionsPage = () => {
                     <p>No questions found.</p>
                 )}
             </div>
+            <ToastContainer
+                position="top-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </div>
     );
 };
